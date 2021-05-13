@@ -1,0 +1,43 @@
+
+/*Dropdown*/
+.dropdown.dropdown-wh {
+	width: 175px;
+	height: 35px;
+}
+
+.dropdown .dropdown-toggle {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	align-items: center;
+	height: 100%;
+	width: 100%;
+	border: 2px solid rgba(0,0,0,.35);
+	border-radius: 3px;
+	padding: .2rem .6em;
+	font-size: 14px;
+	text-transform: capitalize;
+}
+
+.dropdown .btn:focus {
+	outline: none;
+	box-shadow: none;
+} 
+
+.dropdown .btn {
+	text-align: left;
+}
+
+.dropdown .btn:after {
+	width: 4px;
+	height: 4px;
+	justify-self: end;
+}
+
+.dropdown-menu.show {
+	width: 175px;
+}
+
+.dropdown-menu .dropdown-item {
+	cursor: pointer;
+	text-transform: capitalize;
+}
