@@ -1,9 +1,10 @@
 import './Title.css'
 
 const Title = () => {
+
     return (
         <div className="title">
-           Hover squares 
+           Hover squares
         </div>
     )
 }

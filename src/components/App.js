@@ -1,4 +1,13 @@
 // https://starnavi-frontend-test-task-v3.netlify.app/
+// Вот небольшой комментарий от технического специалиста:
+// -все в одном коммите - 
+// -нет проп тайпс
+// -работа с DOM напрямую
+// -for instead forEach
+// -мутейт состояния
+// -стили через HOC
+// ?removeAlert можно написать через find
+
 import {useState, useEffect} from 'react'
 import api from '../apis/mode'
 
@@ -38,6 +47,7 @@ const App = () => {
 	const refreshBoard = () => {
 		let board = document.getElementById('tableBoard')
 		let activeCell = board.querySelectorAll('tr td.active')
+		console.log(activeCell)
 		for(let i = 0; i < activeCell.length; i++) {
 			activeCell[i].classList.remove('active')
 		}
@@ -56,14 +66,6 @@ const App = () => {
 			return [...prevElem, {row: row, col: col}]
 		})
 	}
-
-	const removeAlert = (row, col) => {
-		let index = posSquares.findIndex(item => item.row === row && item.col === col)
-		sePosSquares([
-			...posSquares.slice(0, index),
-			...posSquares.slice(index + 1)
-		])
-	}
 	
 	const handleMouseEnter = (e, idCell) => {
 		let rowColl = idCell.split('-')
@@ -73,7 +75,6 @@ const App = () => {
 
 		if(target.classList.contains("active")) {
 			target.className = ''
-			removeAlert(row, col)
 		} else {
 			target.className += 'active'
 			addAlert(row, col)
