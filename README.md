@@ -16,6 +16,10 @@ This app bootstrapped with [Create React App](https://github.com/facebook/create
   * if the user hovers on the blue square - he turns white
   * show hover squares
 
+## Fetch data example
+
+Sample of fetch data in "docs/request_exmp.txt"
+
 ## Example of design:
 
 ![](docs/demo.png)
