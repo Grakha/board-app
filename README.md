@@ -1,4 +1,4 @@
-# Squers App
+# Board App
 
 This app bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
