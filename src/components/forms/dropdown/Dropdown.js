@@ -1,4 +1,5 @@
 import {useState, useRef, useEffect} from 'react'
+import PropTypes from 'prop-types'
 
 import './Dropdown.css'
 
@@ -53,3 +54,13 @@ const Dropdown = ({options, mode, switchMode}) => {
 }
 
 export default Dropdown
+
+Dropdown.propTypes = {
+  options: PropTypes.objectOf(
+    PropTypes.shape({
+      field: PropTypes.number.isRequired
+    })
+  ).isRequired,
+  mode: PropTypes.string.isRequired,
+  switchMode: PropTypes.func.isRequired
+}

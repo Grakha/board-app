@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 import './Button.css'
 
 const Button = ({onStart}) => {
@@ -9,3 +11,7 @@ const Button = ({onStart}) => {
 }
 
 export default Button
+
+Button.propTypes = {
+    onStart: PropTypes.func
+}

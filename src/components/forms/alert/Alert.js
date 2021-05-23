@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 import './Alert.css'
 
 const Alert = ({row, col}) => {
@@ -10,3 +12,9 @@ const Alert = ({row, col}) => {
 }
 
 export default Alert
+
+
+PropTypes.propTypes = {
+    row: PropTypes.string.isRequired,
+    col: PropTypes.string.isRequired
+}

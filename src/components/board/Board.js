@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import './Board.css'
 
 
@@ -5,6 +6,7 @@ const TableBoard = ({ field, handleMouseEnter, showBoard }) => {
   
 	const createBoard = () => {
 		let rows = []
+
 		for(let i = 0; i < field; i++) {
 			let idRow = `row-${i+1}`
 			let cell = []
@@ -27,3 +29,9 @@ const TableBoard = ({ field, handleMouseEnter, showBoard }) => {
 }
 
 export default TableBoard
+
+TableBoard.propTypes = {
+	field: PropTypes.number.isRequired,
+	handleMouseEnter: PropTypes.func.isRequired,
+	showBoard: PropTypes.bool
+}

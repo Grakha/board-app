@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 import './Main.css'
 
 const Main = ({children}) => {
@@ -9,3 +11,8 @@ const Main = ({children}) => {
 }
 
 export default Main
+
+
+Main.propTypes = {
+    children: PropTypes.element
+}

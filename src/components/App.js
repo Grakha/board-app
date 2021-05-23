@@ -15,17 +15,17 @@ import Board from './board/Board'
 import '../assets/css/style.css'
 
 const App = () => {
-  const [options, setOptions] = useState([])
+  const [options, setOptions] = useState({})
 	const [field, setField] = useState(0)
 	const [mode, setMode] = useState('')
 	const [showBoard, setShowBoard] = useState(false)
 
-	const [posSquares, sePosSquares] = useState([])
+	const [posSquares, setPosSquares] = useState([])
 
   useEffect(() => {
     api.get('/')
         .then(res => {
-          setOptions(res.data)
+          setOptions({...res.data})
         })
         .catch(error => console.error(`Error: ${error}`))
   }, [])
@@ -37,10 +37,7 @@ const App = () => {
 	const refreshBoard = () => {
 		let board = document.getElementById('tableBoard')
 		let activeCell = board.querySelectorAll('tr td.active')
-		console.log(activeCell)
-		for(let i = 0; i < activeCell.length; i++) {
-			activeCell[i].classList.remove('active')
-		}
+		activeCell.forEach(elem => elem.classList.remove('active'))
 		posSquares.length = 0
 	}
  
@@ -52,10 +49,18 @@ const App = () => {
   }
 
 	const addAlert = (row, col) => {
-		sePosSquares(prevElem => {
-			return [...prevElem, {row: row, col: col}]
+		setPosSquares(prev => {
+			return [...prev, {row: row, col: col}]
 		})
 	}
+
+	// const removeAlert = (row, col) => {
+	// 	let index = posSquares.findIndex(item => item.row === row && item.col === col)
+	// 	setPosSquares([
+	// 		...posSquares.slice(0, index),
+	// 		...posSquares.slice(index + 1)
+	// 	])
+	// }
 	
 	const handleMouseEnter = (e, idCell) => {
 		let rowColl = idCell.split('-')
@@ -65,6 +70,7 @@ const App = () => {
 
 		if(target.classList.contains("active")) {
 			target.className = ''
+			// removeAlert(row, col)
 		} else {
 			target.className += 'active'
 			addAlert(row, col)

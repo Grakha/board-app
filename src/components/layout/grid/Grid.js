@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 import './Grid.css'
 
 
@@ -10,3 +12,9 @@ const Grid = ({children, grid}) => {
 }
 
 export default Grid
+
+
+Grid.propTypes = {
+    children: PropTypes.node,
+    grid: PropTypes.string
+}
