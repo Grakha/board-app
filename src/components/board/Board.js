@@ -1,8 +1,29 @@
+import React from 'react'
 import PropTypes from 'prop-types'
-import './Board.css'
+import { createUseStyles } from 'react-jss'
 
+const useStyles = createUseStyles({
+  tableBoard: {
+    tableLayout: "fixed",
+    border: "1px solid #000000",
+    borderWidth: "0 0 1px 1px",
+
+    '& td': {
+      display: 'inline-block',
+      width: 54,
+      height: 54,
+      border: '1px solid #000000',
+      borderWidth: '1px 1px 0 0',
+
+        '&.active': {
+          backgroundColor: '#007bff',
+        },
+    }
+  }
+})
 
 const TableBoard = ({ field, handleMouseEnter, showBoard }) => {
+  const classes = useStyles()
   
 	const createBoard = () => {
 		let rows = []
@@ -20,7 +41,7 @@ const TableBoard = ({ field, handleMouseEnter, showBoard }) => {
 	}
 
   return (
-    <table id="tableBoard" cellSpacing="0" style={{width : `${field * 54 + 1 + "px"}`}}>
+    <table id="tableBoard" class={classes.tableBoard} cellSpacing="0" style={{width : `${field * 54 + 1 + "px"}`}}>
       <tbody>
         {createBoard()}
       </tbody>

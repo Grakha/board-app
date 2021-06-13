@@ -1,4 +1,19 @@
-import {useState, useEffect} from 'react'
+/*
+Ниже направляю более развернутое описание нашего тех специалиста:
+
+показать какие инструменты и подходы он использует в разработке 
+но for процендурный подход а forEach более декларативный.
+Описывать for для того чтобы пройтись по массиву в данному случае изыточно. Этот пункт тоже не является ключевым, лишь отображает выбор инструментов для решения задачи
+const filteredSquares = posSquares.filter(square => square.row !== row && square.col !== col); setPosSquares(filteredSquares);
+А так нам приходится найти индекс, потом создать новый массив и выкинуть элемент по этому индексу. Так можно делать, но я не вижу почему в данном случае findIndex подходит лучше, если эти 2 действия можно сделать одним действием
+В замечаниях еще было указано что была напрямую работа с DOM, но эта зона ответственности React и считается плохой практикой.
+@React is unaware of changes made to the DOM outside of React. It determines updates based on its own internal representation, and if the same DOM nodes are manipulated by another library, React gets confused and has no way to recover.@ - https://reactjs.org/docs/integrating-with-other-libraries.html
+Здесь речь идет о том как можно выйти из ситуации когда все же надо вручную манипулировать DOM вне реакта, но это не случай, который был в тестовом. И это потенциальное место возникновения багов с рендером
+
+Описание каждого стиля через HOC обертку выглядит избыточным.
+*/
+
+import React, {useState, useEffect} from 'react'
 import api from '../apis/mode'
 
 
@@ -9,7 +24,6 @@ import Button from './forms/button/Button'
 import Alert from './forms/alert/Alert'
 import Dropdown from './forms/dropdown/Dropdown'
 
-import Grid from './layout/grid/Grid'
 import Board from './board/Board'
 
 import '../assets/css/style.css'
@@ -21,6 +35,8 @@ const App = () => {
 	const [showBoard, setShowBoard] = useState(false)
 
 	const [posSquares, setPosSquares] = useState([])
+
+
 
   useEffect(() => {
     api.get('/')
@@ -34,18 +50,23 @@ const App = () => {
 		setShowBoard(true)
 	}
 
-	const refreshBoard = () => {
-		let board = document.getElementById('tableBoard')
-		let activeCell = board.querySelectorAll('tr td.active')
-		activeCell.forEach(elem => elem.classList.remove('active'))
-		posSquares.length = 0
-	}
+	useEffect(() => {
+		
+		const refreshBoard = () => {
+
+			let board = document.getElementById('tableBoard')
+			let activeCell = board.querySelectorAll('tr td.active')
+
+			activeCell.forEach(elem => elem.classList.remove('active'))
+		}
+		refreshBoard()
+	}, [mode])
+
  
   const switchMode = (val, key) => {
     let textMode = key.slice(0, -4) + " " + key.slice(-4)
 		setMode(textMode)
 		setField(val)
-		refreshBoard()
   }
 
 	const addAlert = (row, col) => {
@@ -54,13 +75,16 @@ const App = () => {
 		})
 	}
 
-	// const removeAlert = (row, col) => {
+	const removeAlert = (row, col) => {
 	// 	let index = posSquares.findIndex(item => item.row === row && item.col === col)
 	// 	setPosSquares([
 	// 		...posSquares.slice(0, index),
 	// 		...posSquares.slice(index + 1)
 	// 	])
-	// }
+    const filteredSquares = posSquares.filter(square => square.row !== row && square.col !== col);
+    console.log("object")
+    setPosSquares(filteredSquares);
+	}
 	
 	const handleMouseEnter = (e, idCell) => {
 		let rowColl = idCell.split('-')
@@ -70,7 +94,7 @@ const App = () => {
 
 		if(target.classList.contains("active")) {
 			target.className = ''
-			// removeAlert(row, col)
+			removeAlert(row, col)
 		} else {
 			target.className += 'active'
 			addAlert(row, col)
@@ -79,10 +103,10 @@ const App = () => {
 
 	return (
 		<Main>
-			<Grid grid="grid grid_row row_gap">
-				<Grid grid="grid grid_col col_gap35">
-					<Grid grid="grid col_gap row_gap30 content_start">
-						<Grid grid="grid grid_col_wd col_gap">
+      <div className="grid grid_row row_gap">
+        <div className="grid grid_col col_gap35">
+          <div className="grid col_gap row_gap30 content_start">
+            <div className="grid grid_col_wd col_gap">
 							<div>
 								<Dropdown 
 									options={options}
@@ -93,16 +117,16 @@ const App = () => {
 								<Button 
 								onStart={onStart} />
 							</div>
-						</Grid>
+						</div>
 						<div>
 							<Board
 								field={field}
 								showBoard={showBoard}
 								handleMouseEnter={handleMouseEnter} />
 						</div>
-					</Grid>
+					</div>
 
-					<Grid grid="grid col_gap row_gap content_start">
+          <div className="grid col_gap row_gap content_start">
 						<div>
 							<Title />
 						</div>
@@ -116,9 +140,9 @@ const App = () => {
 									})
 								}
 						</div>
-					</Grid>
-				</Grid>
-			</Grid>
+					</div>
+				</div>
+			</div>
 		</Main>
 	)
 }

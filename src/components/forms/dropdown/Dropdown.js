@@ -1,8 +1,6 @@
 import {useState, useRef, useEffect} from 'react'
 import PropTypes from 'prop-types'
 
-import './Dropdown.css'
-
 const Dropdown = ({options, mode, switchMode}) => {
 
   const [toggleDropdown, setToggleDropdown] = useState(false)
